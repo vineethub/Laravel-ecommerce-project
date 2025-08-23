@@ -1,61 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel & Redis E-commerce Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a modern e-commerce web application built with Laravel 11 and powered by Redis. The project serves as a practical learning exercise to demonstrate core e-commerce functionalities and the effective use of Redis for high-performance features like caching and session management.
 
-## About Laravel
+## Project Status: In Development
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The project is actively under development. The core foundation is complete, and we are currently building out the main e-commerce transaction features.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Completed Features (✅)
+*   **Product Catalog:** Users can browse a grid of products and view individual product detail pages.
+*   **User Authentication:** A complete, custom-built authentication system allows users to register, log in, and log out. Routes are protected with middleware.
+*   **Redis-Powered Shopping Cart:**
+    *   A high-performance shopping cart using Redis Hashes.
+    *   Supports both guest and authenticated user carts.
+    *   Guest carts are seamlessly merged into user accounts upon login.
+*   **Git Version Control:** The codebase is version-controlled and hosted on GitHub.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Current Work-in-Progress (🚧)
+*   **Checkout Flow:** Building the pages and logic for users to enter shipping information.
 
-## Learning Laravel
+### Next Steps (🚀)
+1.  **Payment Gateway Integration:** Integrate Stripe to handle secure online payments.
+2.  **Order Management System:** Create a system to store permanent order records in the main SQL database.
+3.  **User Dashboard:** Develop a dashboard for users to view their order history and manage their profiles.
+4.  **Admin Panel:** Create a backend interface for store administrators to manage products and orders.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
+*   **Backend:** Laravel 11 (PHP)
+*   **Database:** MySQL (for permanent data like users, products, orders)
+*   **In-Memory Store:** Redis (for caching, shopping carts, and session management)
+*   **Frontend:** Tailwind CSS
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Getting Started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-## Laravel Sponsors
+### Prerequisites
+*   PHP (version 8.2 or higher)
+*   Composer
+*   Node.js & NPM
+*   A local database server (e.g., MySQL)
+*   Redis Server
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Installation
+1.  **Clone the repository:**
+    ```
+    git clone https://github.com/vineethub/Laravel-ecommerce-project.git
+    cd Laravel-ecommerce-project
+    ```
 
-### Premium Partners
+2.  **Install PHP dependencies:**
+    ```
+    composer install
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3.  **Create your environment file:**
+    ```
+    cp .env.example .env
+    ```
 
-## Contributing
+4.  **Configure your `.env` file:**
+    *   Set up your `DB_` connection details (database name, username, password).
+    *   Ensure your `REDIS_HOST` and `REDIS_PORT` are correct.
+    *   Set `CACHE_STORE=redis` and `REDIS_CLIENT=predis`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5.  **Generate an application key:**
+    ```
+    php artisan key:generate
+    ```
 
-## Code of Conduct
+6.  **Run database migrations and seed with sample data:**
+    ```
+    php artisan migrate --seed
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7.  **Install frontend dependencies:**
+    ```
+    npm install
+    npm run dev
+    ```
 
-## Security Vulnerabilities
+8.  **Run the development server:**
+    ```
+    php artisan serve
+    ```
+The application should now be running at `http://127.0.0.1:8000`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
