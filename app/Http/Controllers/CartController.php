@@ -30,10 +30,11 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
+        
         $productId = $request->input('product_id');
         $quantity = $request->input('quantity', 1);
         $cartKey = $this->getCartKey(); // Use the new dynamic key
-
+       
         Redis::hincrby($cartKey, $productId, $quantity);
 
         return back()->with('success', 'Product added to cart!');
@@ -48,12 +49,24 @@ class CartController extends Controller
         $cartItems = Redis::hgetall($cartKey);
 
         $products = [];
+        $subtotal = 0; // Initialize subtotal to 0
+
         if ($cartItems) {
             $productIds = array_keys($cartItems);
             $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
+
+            // --- ADD THIS CALCULATION ---
+            // Loop through the cart items to calculate the subtotal
+            foreach ($cartItems as $productId => $quantity) {
+                if (isset($products[$productId])) {
+                    $subtotal += $products[$productId]->price * $quantity;
+                }
+            }
+            // --- END OF ADDITION ---
         }
 
-        return view('cart.show', compact('cartItems', 'products'));
+        // Pass the new $subtotal variable to the view
+        return view('cart.show', compact('cartItems', 'products', 'subtotal'));
     }
 
     /**

@@ -5,8 +5,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\DashboardController; // Assuming you have a dashboard
+use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,12 +65,29 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     // Example of a user dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Add other authenticated routes here, like:
-    // Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store'); 
+
+
+    // Route::get('/payment', function(Request $request) {
+    //     // Check if an address has been submitted
+    //     if (!$request->session()->has('shipping_address_id')) {
+    //         return redirect()->route('checkout.create')->with('error', 'Please submit your shipping address first.');
+    //     }
+    //     return "This is the payment page. Address ID: " . $request->session()->get('shipping_address_id');
+    // })->name('payment.create');
+
+    // Previous placeholder route can be replaced by these
+    Route::get('/payment', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
+
 });
 
