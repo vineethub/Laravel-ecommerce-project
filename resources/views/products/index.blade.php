@@ -14,6 +14,15 @@
         </div>
     </header>
 
+    <form action="{{ route('products.search') }}" method="GET" class="flex items-center">
+    <input type="text" name="query" placeholder="Search for products..."
+           class="px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-blue-500"
+           value="{{ request('query') }}" required>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700">
+        Search
+    </button>
+</form>
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Product Grid -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Redis;
 
@@ -31,5 +32,26 @@ class ProductController extends Controller
         Redis::ltrim($listKey, 0, 4);
 
         return view('products.show', compact('product'));
+    }
+
+
+     /**
+     * Search for products.
+     */
+    public function search(Request $request)
+    {
+        // Validate the request to ensure 'query' is present
+        $request->validate([
+            'query' => 'required|string|min:3',
+        ]);
+
+        $query = $request->input('query');
+
+        // Perform the search query
+        $products = Product::where('name', 'like', "%{$query}%")
+                           ->orWhere('description', 'like', "%{$query}%")
+                           ->paginate(10); // Paginate the results
+
+        return view('products.search-results', compact('products', 'query'));
     }
 }

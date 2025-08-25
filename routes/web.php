@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+Use App\Http\Controllers\CategoryController;
 
 
 /*
@@ -24,6 +25,7 @@ use App\Http\Controllers\ProfileController;
 // Product routes
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/search', [ProductController::class, 'search'])->name('products.search');
 
 // Cart routes that can be used by guests
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
@@ -88,6 +90,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
+
+
+
+    Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show'); 
+    
 
 });
 

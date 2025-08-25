@@ -8,33 +8,33 @@ The application now has a complete, end-to-end transaction flow and a full suite
 
 ### Completed Features (✅)
 *   **Full E-commerce Transaction Flow:**
-    *   **Product Catalog:** Browse products and view details.
-    *   **Redis-Powered Shopping Cart:** A high-performance cart that persists for logged-in users and merges guest carts on login.
-    *   **Multi-Step Checkout:** Users can enter and save a shipping address.
-    *   **Stripe Payment Integration:** Securely process credit card payments via the Stripe API.
-    *   **Order Management System:** Upon successful payment, a permanent record of the sale is created in the main SQL database.
+    *   Product Catalog, Redis-Powered Shopping Cart, Multi-Step Checkout, Stripe Payment Integration, and an Order Management System.
 *   **Complete User Account Management:**
-    *   **User Authentication:** Custom registration, login, and logout system.
-    *   **User Dashboard:** A central hub for logged-in users showing account stats and quick links.
-    *   **Order History:** A dedicated page where users can view their past orders and order details.
-    *   **Account Settings:** Users can update their profile information (name, email).
-    *   **Secure Password Updates:** Users can securely change their account password.
+    *   User Authentication (Register, Login, Logout).
+    *   User Dashboard with account overview.
+    *   Detailed Order History page.
+    *   Full Account Settings (Profile info and secure password updates).
+*   **Robust Authorization System:**
+    *   Implemented a powerful roles and permissions system using `spatie/laravel-permission`.
+    *   Created `Super-Admin`, `Admin`, and `Customer` roles with granular permissions.
 
 ### Next Steps (🚀)
-The next phase focuses on enhancing the product discovery and shopping experience.
+With a secure authorization system in place, the immediate next step is to build the Admin Panel itself.
 
-1.  **Product Search:** Implement a search bar to allow users to find products quickly.
-2.  **Product Categories:** Group products into categories to improve browsing.
-3.  **Admin Panel:** Create a backend panel for managing products, viewing all orders, and overseeing users.
-4.  **Customer Reviews:** Allow verified purchasers to leave product reviews and ratings.
+1.  **Build Admin Panel:** Create a secure area for administrators to manage the store.
+2.  **Category CRUD:** The first feature within the admin panel will be to Create, Read, Update, and Delete product categories.
+3.  **Product Search & Filtering:** Implement a search bar and advanced filtering options.
+4.  **Build a RESTful API:** Create API endpoints for use with other applications (e.g., a mobile app).
 
 
 ## Tech Stack
 *   **Backend:** Laravel 11 (PHP)
+*   **Authorization:** `spatie/laravel-permission`
 *   **Database:** MySQL
 *   **In-Memory Store:** Redis
 *   **Frontend:** Tailwind CSS
 *   **Payment Gateway:** Stripe
+
 
 ## Getting Started
 
