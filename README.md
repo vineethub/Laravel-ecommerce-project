@@ -11,20 +11,23 @@ The application now has a complete, end-to-end transaction flow and a full suite
     *   Product Catalog, Redis-Powered Shopping Cart, Multi-Step Checkout, Stripe Payment Integration, and an Order Management System.
 *   **Complete User Account Management:**
     *   User Authentication (Register, Login, Logout).
-    *   User Dashboard with account overview.
-    *   Detailed Order History page.
-    *   Full Account Settings (Profile info and secure password updates).
+    *   User Dashboard, Order History, and full Account Settings.
 *   **Robust Authorization System:**
     *   Implemented a powerful roles and permissions system using `spatie/laravel-permission`.
-    *   Created `Super-Admin`, `Admin`, and `Customer` roles with granular permissions.
+    *   Created `Super-Admin`, `Admin`, and `Customer` roles.
+*   **Functional Admin Panel:**
+    *   A secure, role-protected admin area.
+    *   Full CRUD (Create, Read, Update, Delete) functionality for managing **Product Categories**.
+    *   Full CRUD functionality for managing **Products**, including assigning them to categories.
 
 ### Next Steps (🚀)
-With a secure authorization system in place, the immediate next step is to build the Admin Panel itself.
+The core application and admin panel are functional. The next phase focuses on rounding out the admin experience and adding key customer-facing features.
 
-1.  **Build Admin Panel:** Create a secure area for administrators to manage the store.
-2.  **Category CRUD:** The first feature within the admin panel will be to Create, Read, Update, and Delete product categories.
-3.  **Product Search & Filtering:** Implement a search bar and advanced filtering options.
-4.  **Build a RESTful API:** Create API endpoints for use with other applications (e.g., a mobile app).
+1.  **Admin Order Management:** Build an interface for admins to view and manage customer orders.
+2.  **Customer Reviews & Ratings:** Allow verified purchasers to leave product reviews.
+3.  **Return/Refund System:** Implement a workflow for customers to request returns or refunds.
+4.  **Coupon Code System:** Add functionality for creating and applying discount codes at checkout.
+5.  **Build a RESTful API:** Create API endpoints for use with other applications (e.g., a mobile app).
 
 
 ## Tech Stack

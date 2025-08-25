@@ -11,6 +11,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 Use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\CategoryController as adminCategoryController;
+use App\Http\Controllers\Admin\ProductController as adminProductController;
 
 
 /*
@@ -50,6 +53,7 @@ Route::middleware('guest')->group(function () {
     // Login Routes
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show'); 
 });
 
 
@@ -91,10 +95,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 
+});
 
 
-    Route::get('/categories/{category:slug}', [CategoryController::class, 'show'])->name('categories.show'); 
+
+// --- Admin Panel Routes ---
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::middleware(['auth', 'role:Super-Admin'])->group(function () {
     
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('categories', adminCategoryController::class);
+        Route::resource('products', adminProductController::class);
+        
+        // Add other admin routes here in the future
+        // (e.g., for managing products, categories, etc.)
 
+    });
 });
 
