@@ -31,7 +31,7 @@ The core application and admin panel are functional. The next phase focuses on r
 
 
 ## Tech Stack
-*   **Backend:** Laravel 11 (PHP)
+*   **Backend:** Laravel 12 (PHP)
 *   **Authorization:** `spatie/laravel-permission`
 *   **Database:** MySQL
 *   **In-Memory Store:** Redis
