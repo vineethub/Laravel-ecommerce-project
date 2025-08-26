@@ -98,7 +98,7 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('checkout.create') }}" class="mt-8 w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 font-semibold text-center block">
+                    <a href="{{ route('checkout.index') }}" class="mt-8 w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 font-semibold text-center block">
                         Proceed to Checkout
                     </a>
                 </div>

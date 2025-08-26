@@ -45,28 +45,39 @@ class CartController extends Controller
      */
     public function show()
     {
-        $cartKey = $this->getCartKey(); // Use the new dynamic key
-        $cartItems = Redis::hgetall($cartKey);
-
-        $products = [];
-        $subtotal = 0; // Initialize subtotal to 0
-
-        if ($cartItems) {
-            $productIds = array_keys($cartItems);
+        $cartKey = $this->getCartKey();
+        $rawCart = Redis::hgetall($cartKey);
+    
+        $cartItems = [];
+        $subtotal = 0;
+    
+        if (!empty($rawCart)) {
+            $productIds = array_keys($rawCart);
+            // Fetch all product models at once for efficiency
             $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
-
-            // --- ADD THIS CALCULATION ---
-            // Loop through the cart items to calculate the subtotal
-            foreach ($cartItems as $productId => $quantity) {
+    
+            // Loop through the raw cart data and build the structured array the view needs
+            foreach ($rawCart as $productId => $quantity) {
+                // Ensure the product still exists
                 if (isset($products[$productId])) {
-                    $subtotal += $products[$productId]->price * $quantity;
+                    $product = $products[$productId];
+                    $quantity = (int)$quantity; // Ensure quantity is an integer
+    
+                    $cartItems[] = [
+                        'id'          => $product->id,
+                        'name'        => $product->name,
+                        'price'       => $product->price,
+                        'quantity'    => $quantity,
+                        // You can add other fields here if needed, like 'image'
+                    ];
+    
+                    $subtotal += $product->price * $quantity;
                 }
             }
-            // --- END OF ADDITION ---
         }
-
-        // Pass the new $subtotal variable to the view
-        return view('cart.show', compact('cartItems', 'products', 'subtotal'));
+    
+        // Pass the perfectly formatted $cartItems array to the view
+        return view('cart.show', compact('cartItems', 'subtotal'));
     }
 
     /**
@@ -81,5 +92,25 @@ class CartController extends Controller
 
         return back()->with('success', 'Product removed from cart.');
     }
+
+    public function update(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    $cartKey = $this->getCartKey();
+    $productId = $request->product_id;
+    $quantity = $request->quantity;
+
+    // Check if the product exists in the cart before updating
+    if (Redis::hget($cartKey, $productId)) {
+        Redis::hset($cartKey, $productId, $quantity);
+        return back()->with('success', 'Cart updated successfully.');
+    }
+
+    return back()->withErrors('Product not found in cart.');
+}
 }
 

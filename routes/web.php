@@ -11,9 +11,13 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 Use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\CategoryController as adminCategoryController;
-use App\Http\Controllers\Admin\ProductController as adminProductController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 
 
 /*
@@ -34,6 +38,7 @@ Route::get('/search', [ProductController::class, 'search'])->name('products.sear
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
 
 /*
@@ -78,6 +83,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store'); 
 
+    Route::post('/coupon', [CouponController::class, 'store'])->name('coupon.store');
+
 
     // Route::get('/payment', function(Request $request) {
     //     // Check if an address has been submitted
@@ -95,6 +102,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 
+
+    Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])
+    ->name('reviews.store');
+
 });
 
 
@@ -105,12 +116,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'role:Super-Admin'])->group(function () {
     
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('categories', adminCategoryController::class);
-        Route::resource('products', adminProductController::class);
-        
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('products', AdminProductController::class);
+
+        Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+        Route::patch('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
+        Route::resource('coupons', AdminCouponController::class);
         // Add other admin routes here in the future
         // (e.g., for managing products, categories, etc.)
 
     });
 });
+
+
 

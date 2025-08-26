@@ -12,23 +12,28 @@ The application now has a complete, end-to-end transaction flow and a full suite
 *   **Complete User Account Management:**
     *   User Authentication (Register, Login, Logout).
     *   User Dashboard, Order History, and full Account Settings.
-*   **Robust Authorization System:**
-    *   Implemented a powerful roles and permissions system using `spatie/laravel-permission`.
-    *   Created `Super-Admin`, `Admin`, and `Customer` roles.
 *   **Functional Admin Panel:**
     *   A secure, role-protected admin area.
-    *   Full CRUD (Create, Read, Update, Delete) functionality for managing **Product Categories**.
-    *   Full CRUD functionality for managing **Products**, including assigning them to categories.
+    *   Full CRUD for managing **Product Categories**.
+    *   Full CRUD for managing **Products**.
+    *   A complete **Order Management** system to view orders and update their status.
+    *   A full CRUD interface for creating and managing **Coupon Codes**.
+*   **Advanced Customer Features:**
+    *   A complete **Shopping Cart** with add, view, update, and remove functionality.
+    *   A **Customer Review & Rating** system for products.
+    *   The ability for customers to **apply coupons** in the cart.
 
 ### Next Steps (🚀)
-The core application and admin panel are functional. The next phase focuses on rounding out the admin experience and adding key customer-facing features.
+The core application is now feature-complete. The final phase of development will focus on building out two key systems: one for customer trust and another for external integration.
 
-1.  **Admin Order Management:** Build an interface for admins to view and manage customer orders.
-2.  **Customer Reviews & Ratings:** Allow verified purchasers to leave product reviews.
-3.  **Return/Refund System:** Implement a workflow for customers to request returns or refunds.
-4.  **Coupon Code System:** Add functionality for creating and applying discount codes at checkout.
-5.  **Build a RESTful API:** Create API endpoints for use with other applications (e.g., a mobile app).
+1.  **Return/Refund System:** Build a complete workflow for customers to request returns or refunds for their orders. This will include:
+    *   A "Request Return" option on the customer's order history page.
+    *   A dedicated section in the admin panel to review and process these requests (approve/deny).
+    *   New order statuses to track the return process (e.g., "Return Requested," "Return Approved," "Refunded").
 
+2.  **Build a RESTful API:** Expose the application's data and functionality through a secure, token-based API using Laravel Sanctum. This will enable the development of other clients, such as:
+    *   A native mobile application (iOS/Android).
+    *   A headl
 
 ## Tech Stack
 *   **Backend:** Laravel 12 (PHP)
