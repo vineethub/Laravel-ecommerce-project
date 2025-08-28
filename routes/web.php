@@ -13,11 +13,13 @@ use App\Http\Controllers\ProfileController;
 Use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ReturnRequestController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
+use App\Http\Controllers\Admin\ReturnRequestController as AdminReturnRequestController;
 
 
 /*
@@ -106,6 +108,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])
     ->name('reviews.store');
 
+    Route::get('/orders/{order}/return', [ReturnRequestController::class, 'create'])->name('returns.create');
+    Route::post('/orders/{order}/return', [ReturnRequestController::class, 'store'])->name('returns.store');
+
 });
 
 
@@ -123,8 +128,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::patch('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
         Route::resource('coupons', AdminCouponController::class);
+       
+        Route::get('/return-requests', [AdminReturnRequestController::class, 'index'])->name('returns.index');
+        Route::patch('/return-requests/{returnRequest}', [AdminReturnRequestController::class, 'update'])->name('returns.update');
+        
         // Add other admin routes here in the future
         // (e.g., for managing products, categories, etc.)
+        
 
     });
 });

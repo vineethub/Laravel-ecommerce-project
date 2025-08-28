@@ -10,6 +10,7 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-8">My Order History</h1>
 
+
         @if($orders->isEmpty())
             <div class="text-center bg-white p-8 rounded-lg shadow-sm">
                 <p class="text-gray-600">You have not placed any orders yet.</p>
@@ -24,10 +25,19 @@
                                 <p class="font-semibold text-gray-900">Order #{{ $order->id }}</p>
                                 <p class="text-sm text-gray-600">Placed on: {{ $order->created_at->format('F j, Y') }}</p>
                             </div>
-                            <div>
+                            <div class="text-right">
                                 <span class="text-lg font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</span>
-                                <span class="ml-4 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    {{ ucfirst($order->status) }}
+                                <span class="ml-4 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                    @if(Str::contains($order->status, 'return'))
+                                        bg-orange-100 text-orange-800
+                                    @elseif($order->status === 'completed')
+                                        bg-green-100 text-green-800
+                                    @elseif($order->status === 'cancelled')
+                                        bg-red-100 text-red-800
+                                    @else
+                                        bg-blue-100 text-blue-800
+                                    @endif">
+                                    {{ ucfirst(str_replace('_', ' ', $order->status)) }}
                                 </span>
                             </div>
                         </div>
@@ -51,6 +61,17 @@
                                 @endforeach
                             </ul>
                         </div>
+                        
+                        <!-- === ACTION BUTTON LOGIC === -->
+                        <div class="p-6 bg-gray-50 border-t text-right">
+                            @if ($order->status === 'completed')
+                                <a href="{{ route('returns.create', $order) }}" class="inline-block bg-gray-600 text-white py-2 px-5 rounded-lg hover:bg-gray-700 font-semibold text-sm">
+                                    Request Return
+                                </a>
+                            @endif
+                        </div>
+                        <!-- === END OF ACTION BUTTON LOGIC === -->
+                        
                     </div>
                 @endforeach
             </div>
