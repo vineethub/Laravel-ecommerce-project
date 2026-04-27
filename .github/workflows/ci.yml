@@ -30,6 +30,18 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
 
+      - name: Setup SQLite DB
+        run: |
+          touch database/database.sqlite
+
+      - name: Configure DB
+        run: |
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=database\/database.sqlite/' .env
+
+      - name: Run migrations
+        run: php artisan migrate
+
       - name: Set permissions
         run: chmod -R 777 storage bootstrap/cache
 
