@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
@@ -38,16 +38,16 @@ class ProfileController extends Controller
     }
 
     public function updatePassword(Request $request)
-{
-    $validatedData = $request->validate([
-        'current_password' => ['required', 'current_password'],
-        'password' => ['required', Password::defaults(), 'confirmed'],
-    ]);
+    {
+        $validatedData = $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
+        ]);
 
-    $request->user()->update([
-        'password' => Hash::make($validatedData['password']),
-    ]);
+        $request->user()->update([
+            'password' => Hash::make($validatedData['password']),
+        ]);
 
-    return back()->with('status', 'password-updated');
-}
+        return back()->with('status', 'password-updated');
+    }
 }

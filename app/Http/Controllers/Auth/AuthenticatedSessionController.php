@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
         ]);
 
         // Get the guest cart key BEFORE logging the user in
-        $guestCartKey = 'cart:' . $request->session()->getId();
+        $guestCartKey = 'cart:'.$request->session()->getId();
         $guestCartItems = Redis::hgetall($guestCartKey);
 
         if (Auth::attempt($credentials)) {
@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
             // --- MERGE CART LOGIC ---
             if ($guestCartItems) {
-                $userCartKey = 'cart:' . Auth::id();
+                $userCartKey = 'cart:'.Auth::id();
 
                 // Loop through the guest cart items and add them to the user's cart
                 foreach ($guestCartItems as $productId => $quantity) {

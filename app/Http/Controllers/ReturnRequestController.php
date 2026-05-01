@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Order;
+use Illuminate\Http\Request;
 
 class ReturnRequestController extends Controller
 {
@@ -13,6 +13,7 @@ class ReturnRequestController extends Controller
         if (auth()->id() !== $order->user_id || $order->status !== 'completed') {
             abort(403);
         }
+
         return view('returns.create', compact('order'));
     }
 

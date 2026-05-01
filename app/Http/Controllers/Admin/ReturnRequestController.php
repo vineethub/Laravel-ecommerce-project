@@ -3,28 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\ReturnRequest;
+use Illuminate\Http\Request;
+
 class ReturnRequestController extends Controller
 {
     public function index()
-{
-    $requests = ReturnRequest::with('user', 'order')->latest()->paginate(15);
-    return view('admin.returns.index', compact('requests'));
-}
+    {
+        $requests = ReturnRequest::with('user', 'order')->latest()->paginate(15);
 
-public function update(Request $request, ReturnRequest $returnRequest)
-{
-    $request->validate(['status' => 'required|in:approved,declined,completed']);
+        return view('admin.returns.index', compact('requests'));
+    }
 
-    $returnRequest->update([
-        'status' => $request->status,
-        'admin_comment' => $request->admin_comment,
-    ]);
+    public function update(Request $request, ReturnRequest $returnRequest)
+    {
+        $request->validate(['status' => 'required|in:approved,declined,completed']);
 
-    // Also update the main order's status to reflect the decision
-    $returnRequest->order->update(['status' => 'return_' . $request->status]);
+        $returnRequest->update([
+            'status' => $request->status,
+            'admin_comment' => $request->admin_comment,
+        ]);
 
-    return back()->with('success', 'Return request status updated.');
-}
+        // Also update the main order's status to reflect the decision
+        $returnRequest->order->update(['status' => 'return_'.$request->status]);
+
+        return back()->with('success', 'Return request status updated.');
+    }
 }

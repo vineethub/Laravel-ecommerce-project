@@ -14,8 +14,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('user') // Eager load the user relationship
-                       ->latest()
-                       ->paginate(15);
+            ->latest()
+            ->paginate(15);
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -31,7 +31,6 @@ class OrderController extends Controller
         return view('admin.orders.show', compact('order'));
     }
 
-
     public function updateStatus(Request $request, Order $order)
     {
         $request->validate([
@@ -43,4 +42,3 @@ class OrderController extends Controller
         return back()->with('success', 'Order status updated successfully.');
     }
 }
-

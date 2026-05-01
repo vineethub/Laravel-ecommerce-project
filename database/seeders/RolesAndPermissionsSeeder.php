@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Use firstOrCreate to prevent duplicates
         Permission::firstOrCreate(['name' => 'access admin panel']);
@@ -32,9 +33,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'access admin panel',
             'manage products',
             'manage categories',
-            'manage orders'
+            'manage orders',
         ]);
-        
+
         $superAdminRole = Role::firstOrCreate(['name' => 'Super-Admin']);
 
         // --- Assign a Super-Admin Role to a User ---
@@ -42,7 +43,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Admin User',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
             ]
         );
         $user->assignRole($superAdminRole);

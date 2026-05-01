@@ -11,7 +11,7 @@ class CouponController extends Controller
     {
         $coupon = Coupon::where('code', $request->coupon_code)->first();
 
-        if (!$coupon) {
+        if (! $coupon) {
             return back()->withErrors('Invalid coupon code. Please try again.');
         }
 
