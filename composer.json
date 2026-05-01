@@ -12,7 +12,8 @@
         "laravel/tinker": "^2.10.1",
         "predis/predis": "^3.2",
         "spatie/laravel-permission": "^6.21",
-        "stripe/stripe-php": "^17.5"
+        "stripe/stripe-php": "^17.5",
+        "symfony/clock": "^7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
