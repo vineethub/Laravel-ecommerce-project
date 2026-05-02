@@ -12,11 +12,11 @@ class CheckRole
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (!Auth::check() || !$request->user()->hasRole($role)) {
+        if (! Auth::check() || ! $request->user()->hasRole($role)) {
             // If the user is not logged in or doesn't have the role,
             // redirect them or show an error.
             // For an admin panel, aborting with a 403 Forbidden is a good choice.

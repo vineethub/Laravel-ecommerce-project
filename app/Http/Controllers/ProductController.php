@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
@@ -14,6 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+
         return view('products.index', compact('products'));
     }
 
@@ -23,7 +24,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         // The key for the recently viewed list
-        $listKey = 'recently_viewed:' . session()->getId();
+        $listKey = 'recently_viewed:'.session()->getId();
 
         // 1. Add the product ID to the front of the list
         Redis::lpush($listKey, $product->id);
@@ -34,8 +35,7 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
 
-
-     /**
+    /**
      * Search for products.
      */
     public function search(Request $request)
@@ -49,8 +49,8 @@ class ProductController extends Controller
 
         // Perform the search query
         $products = Product::where('name', 'like', "%{$query}%")
-                           ->orWhere('description', 'like', "%{$query}%")
-                           ->paginate(10); // Paginate the results
+            ->orWhere('description', 'like', "%{$query}%")
+            ->paginate(10); // Paginate the results
 
         return view('products.search-results', compact('products', 'query'));
     }

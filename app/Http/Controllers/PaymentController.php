@@ -1,14 +1,15 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
-use App\Models\Product;
-use Stripe;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
+use Stripe;
 
 class PaymentController extends Controller
 {
@@ -18,9 +19,10 @@ class PaymentController extends Controller
     public function create(Request $request)
     {
         // Ensure user came from the checkout page
-        if (!$request->session()->has('shipping_address_id')) {
+        if (! $request->session()->has('shipping_address_id')) {
             return redirect()->route('checkout.create')->with('error', 'Please submit your shipping address first.');
         }
+
         return view('payment.create');
     }
 
@@ -31,7 +33,7 @@ class PaymentController extends Controller
     {
         // --- START: This is the missing part ---
         // Get the cart details and calculate the total amount
-        $cartKey = 'cart:' . Auth::id();
+        $cartKey = 'cart:'.Auth::id();
         $cartItems = Redis::hgetall($cartKey);
 
         if (empty($cartItems)) {
@@ -51,7 +53,7 @@ class PaymentController extends Controller
 
         // Get the shipping address ID from the session
         $addressId = $request->session()->get('shipping_address_id');
-        if (!$addressId) {
+        if (! $addressId) {
             return redirect()->route('checkout.create')->with('error', 'Shipping address not found.');
         }
 
@@ -61,10 +63,10 @@ class PaymentController extends Controller
             // Process the Stripe payment
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
             Stripe\Charge::create([
-                "amount" => $totalAmount * 100, // Amount in cents
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Order payment from " . Auth::user()->email,
+                'amount' => $totalAmount * 100, // Amount in cents
+                'currency' => 'usd',
+                'source' => $request->stripeToken,
+                'description' => 'Order payment from '.Auth::user()->email,
             ]);
 
             // Create the main order record
@@ -98,7 +100,8 @@ class PaymentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack(); // Roll back the transaction on any error
-            return back()->with('error', 'An error occurred during payment: ' . $e->getMessage());
+
+            return back()->with('error', 'An error occurred during payment: '.$e->getMessage());
         }
     }
 }

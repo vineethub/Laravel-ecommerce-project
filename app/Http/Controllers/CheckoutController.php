@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
-use App\Models\Address;
 
 class CheckoutController extends Controller
 {
@@ -16,7 +16,7 @@ class CheckoutController extends Controller
     public function create()
     {
         // Get the user's cart from Redis
-        $cartKey = 'cart:' . Auth::id();
+        $cartKey = 'cart:'.Auth::id();
         $cartItems = Redis::hgetall($cartKey);
 
         if (empty($cartItems)) {
@@ -47,10 +47,10 @@ class CheckoutController extends Controller
         $validatedData = $request->validate([
             'address_line_1' => ['required', 'string', 'max:255'],
             'address_line_2' => ['nullable', 'string', 'max:255'],
-            'city'           => ['required', 'string', 'max:255'],
-            'state'          => ['required', 'string', 'max:255'],
-            'postal_code'    => ['required', 'string', 'max:20'],
-            'country'        => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'state' => ['required', 'string', 'max:255'],
+            'postal_code' => ['required', 'string', 'max:20'],
+            'country' => ['required', 'string', 'max:255'],
         ]);
 
         // 2. Add the authenticated user's ID to the data

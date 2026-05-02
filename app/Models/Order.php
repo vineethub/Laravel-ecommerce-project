@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    
     protected $fillable = ['user_id', 'address_id', 'status', 'total_amount'];
 
     public function user()
@@ -24,7 +23,8 @@ class Order extends Model
         return $this->belongsTo(Address::class);
     }
 
-    public function returnRequests() {
-         return $this->hasMany(ReturnRequest::class);
-         }
+    public function returnRequests()
+    {
+        return $this->hasMany(ReturnRequest::class);
+    }
 }
