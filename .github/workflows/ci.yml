@@ -2,7 +2,7 @@ name: Laravel CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main]
   pull_request:
     branches: [ main ]
 
@@ -64,7 +64,7 @@ jobs:
       - name: Fix permissions
         run: chmod -R 775 storage bootstrap/cache
         
-      - name: Cache optimize clear
+      - name: Cache optimize cliear
         run: php artisan optimize:clear
 
       - name: Run tests
