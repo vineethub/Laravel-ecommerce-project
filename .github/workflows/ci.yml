@@ -64,6 +64,9 @@ jobs:
         
       - name: Cache optimize cliear
         run: php artisan optimize:clear
+       
+      - name: composer audit
+        run: composer audit  
 
       - name: Run tests
         run: php artisan test
